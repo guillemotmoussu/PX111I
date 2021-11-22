@@ -1,39 +1,45 @@
 def create_and_initialise_matrix(colonnes,lignes,valeur_initiale):
+    #création d'une matrice contenant la valeur initiale dans toutes ses cases
     matrice=[0]*lignes
     for k in range(lignes):
         matrice[k]=[valeur_initiale]*colonnes
     return(matrice)
 
 def create_game_board(valeur_initiale):
+    #création d'un plateau de jeu
     plateau_de_jeu=create_and_initialise_matrix(11,11,valeur_initiale)
-    #plateau_de_jeu[0][0]=" "
-    liste_titres_colonnes=[" ","A","B","C","D","E","F","G","H","I","J"]
+    liste_titres_lignes=[" ","A","B","C","D","E","F","G","H","I","J"]
     for index in range(11):
-        plateau_de_jeu[0][index]=[index]
-        plateau_de_jeu[index][0]=[liste_titres_colonnes[index]]
+        plateau_de_jeu[0][index]=[index]                        #nommage des colonnes
+        plateau_de_jeu[index][0]=[liste_titres_lignes[index]]   #nommage des lignes
     return plateau_de_jeu
 
 def print_matrix(matrice):
+    #affichage d'une matrice donnée en paramètre sous forme de tableau
     for index in range(len(matrice)):
         print(matrice[index])
 
 def print_game_board(valeur_initiale):
+    #affichage du plateau de jeu
     print_matrix(create_game_board(valeur_initiale))
 
 def is_in_matrix(matrice,ligne,colonne):
-    possible=True
-    if ligne>=len(matrice):
-        possible=False
-    if colonne>=len(matrice[0]):
+    #fonction retournant un booléen si un point de coordonnées données est dans la matrice
+    possible=True                       #on considère que c'est possible par défaut
+    if ligne>=len(matrice):             #on dit que c'est faux si la ligne n'est pas dans la matrice
+        possible=False                  
+    if colonne>=len(matrice[0]):        #on dit que c'est faux si la colonne n'est pas dans la matrice
         possible=False
     return possible
 
 def convertir_lettres_en_chiffres(lettre):
-    lettres = ['A','B','C','D','E','F','G','H','I','J']
-    chiffre=99 #ce chiffre n'est pas dans la matrice, et sera donc rejeté par is_in_matrix si la lettre n'est pas bonne
-    for index in range(10):
+    #pour entrer une position sur une ligne on rentre une lettre mais le programme a besoin d'un chiffre,
+    #cette fonction s'occupe de la conversion
+    lettres = ['A','B','C','D','E','F','G','H','I','J']     #uniquement les lettres utiles pour notre programme
+    chiffre=99                                              #chiffre hors de la matrice, sera rejeté par is_in_matrix
+    for index in range(10):                                     #si 'lettre' n'est pas dans 'lettres'
         if lettre==lettres[index]:
-            chiffre=(index+1)
+            chiffre=(index+1)                               #on associe le chiffre correspondant à la lettre
     return chiffre
 
 def enter_position(matrice):
