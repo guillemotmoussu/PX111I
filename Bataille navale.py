@@ -103,7 +103,8 @@ def player_game_board_initialisation(plateau_de_jeu):                           
         if insert_boat(plateau_de_jeu,tailles[pointeur],x,y,orientation,bateaux_disponibles[pointeur]):     #on execute la fonction qui insère un bateau en récupérant sa sortie
             pointeur+=1                                                         #si cette sortie est validée, le bateau est inséré, et on passe au suivant
         print_matrix(plateau_de_jeu)                                            #on affiche le plateau de jeu actualisé
-        
+
+
 
 #programme principal
 
