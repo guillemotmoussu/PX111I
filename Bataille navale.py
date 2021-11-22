@@ -109,5 +109,4 @@ def player_game_board_initialisation(plateau_de_jeu):                           
 #programme principal
 
 plateau_de_jeu=create_game_board(" ")
-print_matrix(plateau_de_jeu)
 player_game_board_initialisation(plateau_de_jeu)
