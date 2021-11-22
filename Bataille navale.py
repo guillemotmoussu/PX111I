@@ -36,8 +36,8 @@ def convertir_lettres_en_chiffres(lettre):
     #pour entrer une position sur une ligne on rentre une lettre mais le programme a besoin d'un chiffre,
     #cette fonction s'occupe de la conversion
     lettres = ['A','B','C','D','E','F','G','H','I','J']     #uniquement les lettres utiles pour notre programme
-    chiffre=99                                              #chiffre hors de la matrice, sera rejeté par is_in_matrix
-    for index in range(10):                                     #si 'lettre' n'est pas dans 'lettres'
+    chiffre=99                                              #chiffre hors de la matrice, sera rejeté par is_in_matrix si 'lettre' n'est pas dans 'lettres'
+    for index in range(10):
         if lettre==lettres[index]:
             chiffre=(index+1)                               #on associe le chiffre correspondant à la lettre
     return chiffre
