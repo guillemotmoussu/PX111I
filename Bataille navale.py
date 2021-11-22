@@ -104,15 +104,25 @@ def player_game_board_initialisation(plateau_de_jeu):                           
             pointeur+=1                                                         #si cette sortie est validée, le bateau est inséré, et on passe au suivant
         print_matrix(plateau_de_jeu)                                            #on affiche le plateau de jeu actualisé
         
-def partie():
-    plateau_de_jeu1=create_game_board(" ")
-    plateau_de_jeu2=create_game_board(" ")
-    player_game_board_initialisation(plateau_de_jeu1)
-    player_game_board_initialisation(plateau_de_jeu2)
-
-
-
-
 
 #programme principal
-partie()
+
+print("C'est au joueur 1 de placer ses bateaux")
+plateau_de_jeu1=create_game_board(" ")
+player_game_board_initialisation(plateau_de_jeu1)
+print("C'est au joueur 2 de placer ses bateaux")
+plateau_de_jeu2=create_game_board(" ")
+player_game_board_initialisation(plateau_de_jeu2)
+
+plateau_ennemi_joueur_1=create_game_board(" ")
+plateau_ennemi_joueur_2=create_game_board(" ")
+
+joueur_1_a_gagné=False
+joueur_2_a_gagné=False
+
+while (joueur_1_a_gagné == False) and (joueur_2_a_gagné == False):
+    print("C'est au tour du joueur 1")
+    print("Voici votre plateau : ")
+    print_game_board(plateau_de_jeu1)
+    print("Voici le plateau ennemi : ")
+    print_game_board(plateau_ennemi_joueur_1)
