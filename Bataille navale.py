@@ -42,7 +42,7 @@ def enter_position(matrice):
     x=convertir_lettres_en_chiffres(x)
     while is_in_matrix(matrice,x,y)==False:
         print("Coordonnées incorrectes")
-        x=int(input("Nouvelle ligne : "))
+        x=str(input("Nouvelle ligne : "))
         y=int(input("Nouvelle colonne : "))
         x=convertir_lettres_en_chiffres(x)
     return (x,y)
@@ -64,10 +64,10 @@ def is_boat_position_valid(plateau_de_jeu,taille,x,y,orientation):
     if x == 0 or y == 0:
         position_valide=False
     if orientation=="H":
-        if is_in_matrix(plateau_de_jeu,x,(y+taille))==False:
+        if is_in_matrix(plateau_de_jeu,x,(y+taille-1))==False:
             position_valide=False
     if orientation=="V":
-        if is_in_matrix(plateau_de_jeu,(x+taille),y)==False:
+        if is_in_matrix(plateau_de_jeu,(x+taille-1),y)==False:
             position_valide=False
     if position_valide==True:
         for index in range(taille):
