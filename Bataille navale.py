@@ -25,12 +25,12 @@ def print_game_board(valeur_initiale):
 
 def is_in_matrix(matrice,ligne,colonne):
     #fonction retournant un booléen si un point de coordonnées données est dans la matrice
-    possible=True                       #on considère que c'est possible par défaut
-    if ligne>=len(matrice):             #on dit que c'est faux si la ligne n'est pas dans la matrice
-        possible=False                  
-    if colonne>=len(matrice[0]):        #on dit que c'est faux si la colonne n'est pas dans la matrice
-        possible=False
-    return possible
+    in_matrix=True                      #on crée une variable à return, vraie s'il n'y a pas de problèmes
+    if ligne>=len(matrice):             #on assigne faux à notre variable si la ligne n'est pas dans la matrice
+        in_matrix=False                  
+    if colonne>=len(matrice[0]):        #on assigne faux à notre variable si la colonne n'est pas dans la matrice
+        in_matrix=False
+    return in_matrix
 
 def convertir_lettres_en_chiffres(lettre):
     #pour entrer une position sur une ligne on rentre une lettre mais le programme a besoin d'un chiffre,
