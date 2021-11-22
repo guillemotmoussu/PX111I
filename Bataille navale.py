@@ -43,7 +43,7 @@ def convertir_lettres_en_chiffres(lettre):
     return chiffre
 
 def enter_position(matrice):
-    x=str(input("Ligne (A à J) : "))
+    x=str(input("Ligne (A à J): "))
     y=int(input("Colonne (1 à 10): "))
     x=convertir_lettres_en_chiffres(x)
     while is_in_matrix(matrice,x,y)==False:
@@ -111,6 +111,7 @@ def player_game_board_initialisation(plateau_de_jeu):
             index_+=1
         print_matrix(plateau_de_jeu)
         
+
 
 
 
