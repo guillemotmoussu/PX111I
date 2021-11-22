@@ -105,6 +105,15 @@ def player_game_board_initialisation(plateau_de_jeu):                           
         print_matrix(plateau_de_jeu)                                            #on affiche le plateau de jeu actualisé
 
 
+#fin du projet ici, le reste est en bonus
+
+
+def tour_de_jeu(plateau_ennemi,plateau):                                        #simule un tour de jeu (pas fini)
+    x,y=enter_position(plateau_ennemi)                                          #demande au joueur où souhaite-t-il tirer
+    #suite du programme...
+    return (plateau_ennemi,plateau)
+
+
 
 #programme principal
 
