@@ -28,9 +28,18 @@ def is_in_matrix(matrice,ligne,colonne):
         possible=False
     return possible
 
+def convertir_lettres_en_chiffres(lettre):
+    lettres = ['A','B','C','D','E','F','G','H','I','J']
+    chiffre=99 #ce chiffre n'est pas dans la matrice, et sera donc rejeté par is_in_matrix si la lettre n'est pas bonne
+    for index in range(10):
+        if lettre==lettres[index]:
+            chiffre=(index+1)
+    return chiffre
+
 def enter_position(matrice):
-    x=int(input("Ligne : "))
+    x=str(input("Ligne : "))
     y=int(input("Colonne : "))
+    x=convertir_lettres_en_chiffres(x)
     while is_in_matrix(matrice,x,y)==False:
         print("Coordonnées incorrectes")
         x=int(input("Nouvelle ligne : "))
