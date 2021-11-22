@@ -117,18 +117,18 @@ def tour_de_jeu(plateau_ennemi,plateau):                                        
 
 #programme principal
 
-print("C'est au joueur 1 de placer ses bateaux")
+print("C'est au joueur 1 de placer ses bateaux")                                #initialisation joueur 1
 plateau_de_jeu1=create_game_board(" ")
 player_game_board_initialisation(plateau_de_jeu1)
 
-print("C'est au joueur 2 de placer ses bateaux")
+print("C'est au joueur 2 de placer ses bateaux")                                #initialisation joueur 2
 plateau_de_jeu2=create_game_board(" ")
 player_game_board_initialisation(plateau_de_jeu2)
 
-plateau_ennemi_joueur_1=create_game_board(" ")
-plateau_ennemi_joueur_2=create_game_board(" ")
+plateau_ennemi_joueur_1=create_game_board(" ")                                  #initialisation plateau ennemi du joueur 1, vide au départ
+plateau_ennemi_joueur_2=create_game_board(" ")                                  #initialisation plateau ennemi du joueur 2, vide au départ
 
-joueur_1_a_gagné=False
+joueur_1_a_gagné=False                                                          #les joueurs sont perdants par défaut, ce sera la condition d'arrêt du programme
 joueur_2_a_gagné=False
 
 while (joueur_1_a_gagné == False) and (joueur_2_a_gagné == False):
@@ -137,3 +137,12 @@ while (joueur_1_a_gagné == False) and (joueur_2_a_gagné == False):
     print_game_board(plateau_de_jeu1)
     print("Voici le plateau ennemi : ")
     print_game_board(plateau_ennemi_joueur_1)
+    plateau_ennemi_joueur_1,plateau_de_jeu2=tour_de_jeu(plateau_ennemi_joueur_1,plateau_de_jeu2)
+    if joueur_1_a_gagné==False:                                             #on s'assure de ne pas faire jouer le 2 si le 1 a gagné
+        print("C'est au tour du joueur 2")
+        print("Voici votre plateau : ")
+        print_game_board(plateau_de_jeu2)
+        print("Voici le plateau ennemi : ")
+        print_game_board(plateau_ennemi_joueur_2)
+        plateau_ennemi_joueur_2,plateau_de_jeu1=tour_de_jeu(plateau_ennemi_joueur_2,plateau_de_jeu1)
+    # suite du programme ...
