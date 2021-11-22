@@ -43,17 +43,19 @@ def convertir_lettres_en_chiffres(lettre):
     return chiffre
 
 def enter_position(matrice):
-    x=str(input("Ligne (A à J): "))
-    y=int(input("Colonne (1 à 10): "))
-    x=convertir_lettres_en_chiffres(x)
-    while is_in_matrix(matrice,x,y)==False:
+    #fonction demandant où ajouter un bateau, et vérifiant via is_in_matrix si c'est correct
+    x=str(input("Ligne (A à J) : "))
+    y=int(input("Colonne (1 à 10) : "))
+    x=convertir_lettres_en_chiffres(x)                  #conversion de la lettre en chiffre
+    while is_in_matrix(matrice,x,y)==False:             #tant que la position est invalide, on redemande des coordonnées
         print("Coordonnées incorrectes")
-        x=str(input("Nouvelle ligne (A à J): "))
-        y=int(input("Nouvelle colonne (1 à 10): "))
+        x=str(input("Nouvelle ligne (A à J) : "))
+        y=int(input("Nouvelle colonne (1 à 10) : "))
         x=convertir_lettres_en_chiffres(x)
     return (x,y)
 
 def enter_orientation():
+    #fonction demandant l'orientation, et vérifiant via is_in_matrix si elle est correcte
     orientation=str(input("Orientation : "))
     while (orientation != "H") and (orientation != "V"):
         orientation=str(input("Caractère incorrect, nouvelle orientation (H ou V) : "))
@@ -61,7 +63,7 @@ def enter_orientation():
 
 def demander_taille():
     taille=int(input("Taille : "))
-    while (taille < 2) or (taille > 5):
+    while (taille < 2) or (taille > 5):                 #tant que l'orientation est invalide, on redemande
         taille=int(input("Taille incorrecte, nouvelle taille (2 à 5) : "))
     return taille
 
