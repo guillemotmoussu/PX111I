@@ -43,13 +43,13 @@ def convertir_lettres_en_chiffres(lettre):
     return chiffre
 
 def enter_position(matrice):
-    x=str(input("Ligne : "))
-    y=int(input("Colonne : "))
+    x=str(input("Ligne (A à J): "))
+    y=int(input("Colonne (1 à 10): "))
     x=convertir_lettres_en_chiffres(x)
     while is_in_matrix(matrice,x,y)==False:
         print("Coordonnées incorrectes")
-        x=str(input("Nouvelle ligne : "))
-        y=int(input("Nouvelle colonne : "))
+        x=str(input("Nouvelle ligne (A à J): "))
+        y=int(input("Nouvelle colonne (1 à 10): "))
         x=convertir_lettres_en_chiffres(x)
     return (x,y)
 
