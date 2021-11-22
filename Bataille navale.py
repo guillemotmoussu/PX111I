@@ -76,8 +76,8 @@ def is_boat_position_valid(plateau_de_jeu,taille,x,y,orientation):              
             if orientation=="V":
                 if plateau_de_jeu[x+index][y]!=" ":
                     position_valide=False
-    return position_valide    
-            
+    return position_valide
+
 def insert_boat(plateau_de_jeu,taille,x,y,orientation,symbole):                 #fonction permettant d'insérer le bateau dans le plateau, si sa position est valide
     insertion_réussie=False                                                     #on considère que ça n'est pas possible par défaut
     if is_boat_position_valid(plateau_de_jeu,taille,x,y,orientation) == True:   #si is_boat_position_valid est vraie alors on peut le placer
