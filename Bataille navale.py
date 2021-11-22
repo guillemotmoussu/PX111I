@@ -38,33 +38,30 @@ def convertir_lettres_en_chiffres(lettre):
     lettres = ['A','B','C','D','E','F','G','H','I','J']     #uniquement les lettres utiles pour notre programme
     chiffre=99                                              #chiffre hors de la matrice, sera rejeté par is_in_matrix si 'lettre' n'est pas dans 'lettres'
     for index in range(10):
-        if lettre==lettres[index]:
+        if lettre==lettres[index]:                          #on vérifie si la lettre est dans notre liste de lettres utiles
             chiffre=(index+1)                               #on associe le chiffre correspondant à la lettre
     return chiffre
 
 def enter_position(matrice):
-    #fonction demandant où ajouter un bateau, et vérifiant via is_in_matrix si c'est correct
-    x=str(input("Ligne (A à J) : "))
-    y=int(input("Colonne (1 à 10) : "))
-    x=convertir_lettres_en_chiffres(x)                  #conversion de la lettre en chiffre
-    while is_in_matrix(matrice,x,y)==False:             #tant que la position est invalide, on redemande des coordonnées
+    x=str(input("Ligne (A à J): "))
+    y=int(input("Colonne (1 à 10): "))
+    x=convertir_lettres_en_chiffres(x)
+    while is_in_matrix(matrice,x,y)==False:
         print("Coordonnées incorrectes")
-        x=str(input("Nouvelle ligne (A à J) : "))
-        y=int(input("Nouvelle colonne (1 à 10) : "))
+        x=str(input("Nouvelle ligne (A à J): "))
+        y=int(input("Nouvelle colonne (1 à 10): "))
         x=convertir_lettres_en_chiffres(x)
     return (x,y)
 
 def enter_orientation():
-    #fonction demandant l'orientation, et vérifiant via is_in_matrix si elle est correcte
     orientation=str(input("Orientation : "))
-    while (orientation != "H") and (orientation != "V"):    #tant que l'orientation est invalide, on redemande
+    while (orientation != "H") and (orientation != "V"):
         orientation=str(input("Caractère incorrect, nouvelle orientation (H ou V) : "))
     return orientation
 
 def demander_taille():
-    #fonction demandant la taille du bateau et vérifiant qu'elle est correcte
     taille=int(input("Taille : "))
-    while (taille < 2) or (taille > 5):                 #tant que la taille est incorrecte on redemande
+    while (taille < 2) or (taille > 5):
         taille=int(input("Taille incorrecte, nouvelle taille (2 à 5) : "))
     return taille
 
