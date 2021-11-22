@@ -104,9 +104,10 @@ def player_game_board_initialisation(plateau_de_jeu):                           
             pointeur+=1                                                         #si cette sortie est validée, le bateau est inséré, et on passe au suivant
         print_matrix(plateau_de_jeu)                                            #on affiche le plateau de jeu actualisé
 
+player_game_board_initialisation(create_game_board(" "))
 
 #fin du projet ici, le reste est en bonus
-
+'''
 
 def tour_de_jeu(plateau_ennemi,plateau):                                        #simule un tour de jeu (pas fini)
     x,y=enter_position(plateau_ennemi)                                          #demande au joueur où souhaite-t-il tirer
@@ -146,3 +147,5 @@ while (joueur_1_a_gagné == False) and (joueur_2_a_gagné == False):
         print_game_board(plateau_ennemi_joueur_2)
         plateau_ennemi_joueur_2,plateau_de_jeu1=tour_de_jeu(plateau_ennemi_joueur_2,plateau_de_jeu1)
     # suite du programme ...
+
+'''
