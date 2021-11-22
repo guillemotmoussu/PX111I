@@ -91,18 +91,18 @@ def insert_boat(plateau_de_jeu,taille,x,y,orientation,symbole):                 
         print("Impossible d'insérer, position invalide")
     return insertion_réussie
 
-def player_game_board_initialisation(plateau_de_jeu):                                                   #demande au joueur où souhaite-t-il placer ses bateaux
-    print_matrix(plateau_de_jeu)                                                                        #on affiche le plateau de jeu vierge
-    bateaux_disponibles=["P","C","R","S","T"]                                                           #on indique la liste des bateaux
-    tailles=[5,4,3,3,2]                                                                                 #ainsi que leurs tailles respectives
-    custom=0                                                                                            #on initialise un pointeur de nos deux listes
-    while custom<5:                                                                                     #tant que pour s'assurer de traiter tous les bateaux
-        print("Insérer",bateaux_disponibles[custom])                                                    #on indique à l'utilisateur quel bateau est-il en train d'insérer
-        x,y=enter_position(plateau_de_jeu)                                                              #on demande à l'utilisateur la position de son bateau
-        orientation=enter_orientation()                                                                 #on demande à l'utilisateur l'orientation de son bateau
-        if insert_boat(plateau_de_jeu,tailles[custom],x,y,orientation,bateaux_disponibles[custom]):     #on execute la fonction qui insère un bateau en récupérant sa sortie
-            custom+=1                                                                                   #si cette sortie est validée, le bateau est insérée, on passe au suivant
-        print_matrix(plateau_de_jeu)                                                                    #on affiche le plateau de jeu actuel
+def player_game_board_initialisation(plateau_de_jeu):                           #fonction qui demande au joueur où souhaite-t-il placer ses bateaux
+    print_matrix(plateau_de_jeu)                                                #on affiche le plateau de jeu vierge
+    bateaux_disponibles=["P","C","R","S","T"]
+    tailles=[5,4,3,3,2]
+    pointeur=0                                                                  #le pointeur permet de parcourir les deux listes
+    while pointeur<5:                                                           #la boucle tournera tant que tous les bateaux ne sont pas positionnés
+        print("Insérer",bateaux_disponibles[pointeur])
+        x,y=enter_position(plateau_de_jeu)
+        orientation=enter_orientation()
+        if insert_boat(plateau_de_jeu,tailles[pointeur],x,y,orientation,bateaux_disponibles[pointeur]):     #on execute la fonction qui insère un bateau en récupérant sa sortie
+            pointeur+=1                                                         #si cette sortie est validée, le bateau est inséré, et on passe au suivant
+        print_matrix(plateau_de_jeu)                                            #on affiche le plateau de jeu actualisé
         
 
 
