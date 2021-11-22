@@ -76,8 +76,8 @@ def is_boat_position_valid(plateau_de_jeu,taille,x,y,orientation):              
             if orientation=="V":
                 if plateau_de_jeu[x+index][y]!=" ":
                     position_valide=False
-    return position_valide    
-            
+    return position_valide
+
 def insert_boat(plateau_de_jeu,taille,x,y,orientation,symbole):                 #fonction permettant d'insérer le bateau dans le plateau, si sa position est valide
     insertion_réussie=False                                                     #on considère que ça n'est pas possible par défaut
     if is_boat_position_valid(plateau_de_jeu,taille,x,y,orientation) == True:   #si is_boat_position_valid est vraie alors on peut le placer
@@ -103,7 +103,7 @@ def player_game_board_initialisation(plateau_de_jeu):                           
         if insert_boat(plateau_de_jeu,tailles[pointeur],x,y,orientation,bateaux_disponibles[pointeur]):     #on execute la fonction qui insère un bateau en récupérant sa sortie
             pointeur+=1                                                         #si cette sortie est validée, le bateau est inséré, et on passe au suivant
         print_matrix(plateau_de_jeu)                                            #on affiche le plateau de jeu actualisé
-        
+
 def partie():
     plateau_de_jeu1=create_game_board(" ")
     plateau_de_jeu2=create_game_board(" ")
