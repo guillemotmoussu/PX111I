@@ -79,24 +79,32 @@ def is_boat_position_valid(plateau_de_jeu,taille,x,y,orientation):
     return position_valide    
             
 def insert_boat(plateau_de_jeu,taille,x,y,orientation,symbole):
+    inser=False
     if is_boat_position_valid(plateau_de_jeu,taille,x,y,orientation) == True:
         for index in range(taille):
             if orientation=="H":
                 plateau_de_jeu[x][y+index]=symbole
             if orientation=="V":
                 plateau_de_jeu[x+index][y]=symbole
+        inser=True
     else :
         print("Impossible d'insérer, position invalide")
+    return inser
 
 def player_game_board_initialisation(plateau_de_jeu):
-    for i in range (5):
-        bateaux_disponibles=["T","S","R","C","P"]
-        taille=demander_taille()
+    bateaux_disponibles=["P","C","R","S","T"]
+    tailles=[5,4,3,3,2]
+    bato=0
+    while bato<5:
+        print("Insérer",bateaux_disponibles[bato])
+        taille=tailles[bato]
         x,y=enter_position(plateau_de_jeu)
         orientation=enter_orientation()
-        symbole=str(input("Nom du bateau : "))
-        insert_boat(plateau_de_jeu,taille,x,y,orientation,symbole)
+        if insert_boat(plateau_de_jeu,taille,x,y,orientation,bateaux_disponibles[bato])==True:
+            bato+=1
         print_matrix(plateau_de_jeu)
+        
+
 
 
 
