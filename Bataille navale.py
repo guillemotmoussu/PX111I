@@ -44,6 +44,7 @@ def enter_position(matrice):
         print("Coordonnées incorrectes")
         x=int(input("Nouvelle ligne : "))
         y=int(input("Nouvelle colonne : "))
+        x=convertir_lettres_en_chiffres(x)
     return (x,y)
 
 def enter_orientation():
