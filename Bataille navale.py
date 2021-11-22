@@ -80,15 +80,17 @@ def insert_boat(plateau_de_jeu,taille,x,y,orientation,symbole):
         print("Impossible d'insérer, position invalide")
 
 def player_game_board_initialisation(plateau_de_jeu):
-    bateaux_disponibles=["T","S","R","C","P"]
-    taille=demander_taille()
-    x,y=enter_position(plateau_de_jeu)
-    orientation=enter_orientation()
-    symbole=str(input("Nom du bateau : "))
-    insert_boat(plateau_de_jeu,taille,x,y,orientation,symbole)
-    print_matrix(plateau_de_jeu)
+    for i in range (5):
+        bateaux_disponibles=["T","S","R","C","P"]
+        taille=demander_taille()
+        x,y=enter_position(plateau_de_jeu)
+        orientation=enter_orientation()
+        symbole=str(input("Nom du bateau : "))
+        insert_boat(plateau_de_jeu,taille,x,y,orientation,symbole)
+        print_matrix(plateau_de_jeu)
 
 
 
 plateau_de_jeu=create_game_board(" ")
 print_matrix(plateau_de_jeu)
+player_game_board_initialisation(plateau_de_jeu)
