@@ -57,13 +57,14 @@ def enter_position(matrice):
 def enter_orientation():
     #fonction demandant l'orientation, et vérifiant via is_in_matrix si elle est correcte
     orientation=str(input("Orientation : "))
-    while (orientation != "H") and (orientation != "V"):
+    while (orientation != "H") and (orientation != "V"):    #tant que l'orientation est invalide, on redemande
         orientation=str(input("Caractère incorrect, nouvelle orientation (H ou V) : "))
     return orientation
 
 def demander_taille():
+    #fonction demandant la taille du bateau et vérifiant qu'elle est correcte
     taille=int(input("Taille : "))
-    while (taille < 2) or (taille > 5):                 #tant que l'orientation est invalide, on redemande
+    while (taille < 2) or (taille > 5):                 #tant que la taille est incorrecte on redemande
         taille=int(input("Taille incorrecte, nouvelle taille (2 à 5) : "))
     return taille
 
