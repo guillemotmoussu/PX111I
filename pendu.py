@@ -22,8 +22,11 @@ def depiler(pile):
     pile[0]-=1
     return pile,element
 
-
-
-
-
-print(nombre_elements(create_pile(5)))
+'''
+pile=create_pile(5)
+print(nombre_elements(pile))
+pile=empiler("j",pile)
+print(nombre_elements(pile))
+pile,element=depiler(pile)
+print(element)
+'''
