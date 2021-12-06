@@ -4,19 +4,13 @@ def create_pile(capa):
     pile[0]=0
     return pile
 
-
-
 def nombre_elements(pile):
     return pile[0]
-
-
 
 def empiler(element,pile):
     pile[pile[0]+1]=element
     pile[0]+=1
     return pile
-
-
 
 def depiler(pile):
     element=pile[pile[0]]
@@ -39,6 +33,30 @@ def trier(liste):
         if index==0:
             liste_triee[0]=liste[0]
         if liste[index]
+
+
+
+
+
+
+
+
+
+
+
+def killdoublons(liste):
+
+    return liste
+
+
+
+
+
+
+
+
+
+
 
 
 
