@@ -22,6 +22,7 @@ def depiler(pile):
     pile[0]-=1
     return pile,element
 
+commite
 
 
 
