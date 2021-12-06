@@ -32,7 +32,7 @@ def trier(liste):
     liste_triee[0]=liste[0]
     for index in range(1,(len(liste)-1)):
         indecse=0
-        while indecse<index and liste[index]<liste_triee[indecse]:
+        while indecse<index-1 and liste[index]<liste_triee[indecse]:
             indecse+=1
         for id2 in range(indecse,index):
             liste_triee[index-id2+1]=liste_triee[index-id2]
@@ -40,7 +40,7 @@ def trier(liste):
     return liste_triee
 
 
-
+print(trier([1,7,4,7,2,5,0,65]))
 
 
 
