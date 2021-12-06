@@ -30,13 +30,13 @@ print(element)
 def trier(liste):
     liste_triee=[None]*len(liste)
     liste_triee[0]=liste[0]
-    for index in range(1,(len(liste)-1)):
-        indecse=0
-        while indecse<index-1 and liste[index]<liste_triee[indecse]:
-            indecse+=1
-        for id2 in range(indecse,index):
-            liste_triee[index-id2+1]=liste_triee[index-id2]
-        liste_triee[indecse]=liste[index]
+    for index_liste in range(1,(len(liste)-1)):
+        index_pge=0
+        while index_pge<index_liste and liste[index_liste]>liste_triee[index_pge]:
+            index_pge+=1
+        for id2 in range(index_pge,index_liste):
+            liste_triee[index_liste-id2+1]=liste_triee[index_liste-id2]
+        liste_triee[index_pge]=liste[index_liste]
     return liste_triee
 
 
