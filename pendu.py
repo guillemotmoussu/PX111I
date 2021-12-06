@@ -16,30 +16,12 @@ def empiler(element,pile):
     pile[0]+=1
     return pile
 
-    
-
-
-
 
 
 def depiler(pile):
     element=pile[0]
     pile-=pile[0]
     return pile,element
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
