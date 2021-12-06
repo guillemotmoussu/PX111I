@@ -1,3 +1,4 @@
+#Piles à capacité finie
 def create_pile(capa):
     pile=(capa+1)*[None]
     pile[0]=0
@@ -31,6 +32,11 @@ pile,element=depiler(pile)
 print(element)
 '''
 
+#Tri de tableaux
+def trier(liste):
+    liste_triee=[]
+    for index in range(len(liste)):
+        if 
 
 
 
