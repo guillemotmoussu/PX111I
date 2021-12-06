@@ -42,5 +42,4 @@ def empiler(element,pile):
 
 
 
-pile=create_pile(5)
-print(nombre_elements(pile))
+print(nombre_elements(create_pile(5)))
