@@ -45,13 +45,35 @@ print(trier([1,7,4,0,0,7,2,55,5,0,65]))
 
 def partie():
     mot=str(input("Quel est le mot : "))
-    print ('\n' * 12)
     chances=8
-    mot_a_trouver=("*"*len(mot))
-    afficher_partie(mot_a_trouver,chances)
+    lettres_trouvées=(["*"]*len(mot))
+    gagné=False
+    echec=False
+    afficher_partie(lettres_trouvées,chances)
+    while (gagné==False and echec==False):
+        lettre=input(str("Quelle est la lettre : "))
 
-def afficher_partie(mot_a_trouver,chances):
-    print(mot_a_trouver)
-    print(chances)
+        if lettre in mot:
+            for index in range(len(mot)):
+                if mot[index]==lettre:
+                    lettres_trouvées[index]=lettre
+            afficher_partie(lettres_trouvées,chances)
+        else:
+            chances-=1
+            if chances == 0:
+                print ('\n' * 12)
+                print ("Bouh vous avez perdu, c'est nul")
+                echec=True
+            else:
+                afficher_partie(lettres_trouvées,chances)
+        if lettres_trouvées==list(mot):
+            gagné=True
+            print ('\n' * 12)
+            print ("Bravo vous avez gagné, c'est bien")
+
+def afficher_partie(lettres_trouvées,chances):
+    print ('\n' * 12)
+    print("Vous avez trouvé : ",lettres_trouvées)
+    print("Il vous reste ",chances," chances")
 
 partie()
