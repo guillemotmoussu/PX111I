@@ -149,4 +149,3 @@ while (joueur_1_a_gagné == False) and (joueur_2_a_gagné == False):
     # suite du programme ...
 
 '''
-jaaj
