@@ -28,9 +28,15 @@ print(element)
 
 #Tri de tableaux
 def trier(liste):
-    liste_triee=[]
+    liste_triee=[None]*len(liste)
     liste_triee[0]=liste[0]
     for index in range(1,(len(liste)-1)):
+        indecse=0
+        while indecse<index and liste[index]<liste_triee[indecse]:
+            indecse+=1
+        for id2 in range(len(liste)):
+
+
         
 
 
