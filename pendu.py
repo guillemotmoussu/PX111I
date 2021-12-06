@@ -18,7 +18,10 @@ def nombre_elements(pile):
 
 
 
-
+def depiler(pile):
+    element=pile[0]
+    pile-=pile[0]
+    return pile,element
 
 
 
