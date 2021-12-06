@@ -43,7 +43,7 @@ def trier(liste):
 
 print(trier([1,7,4,7,2,5,0,65]))
 
-
+https://vscode.dev/liveshare/C9D67E2AE15BD2BAD84AB12C3848B8406218
 
 def killdoublons(liste):
 
