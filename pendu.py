@@ -32,8 +32,9 @@ def trier(liste):
     liste_triee[0]=liste[0]
     for index_liste in range(1,(len(liste)-1)):
         index_pge=0
-        while index_pge<index_liste and liste[index_liste]>liste_triee[index_pge]:
-            index_pge+=1
+        while liste_triee[index_liste]!=None:
+            if liste[index_liste]>liste_triee[index_pge]:
+                index_pge+=1
         for id2 in range(0,index_pge):
             liste_triee[index_liste-id2+1]=liste_triee[index_liste-id2]
         liste_triee[index_pge]=liste[index_liste]
