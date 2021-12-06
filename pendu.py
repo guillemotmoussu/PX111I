@@ -39,3 +39,6 @@ def nombre_elements(pile):
 
 
 
+
+pile=create_pile(5)
+print(nombre_elements(pile))
