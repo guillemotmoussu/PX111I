@@ -50,39 +50,6 @@ def trier(liste):
             if liste[index]>liste_triee[index2]:
                 endroit_a_inserer=(index2+1)
         liste_triee=(liste_triee[:endroit_a_inserer]+[liste[index]]+liste_triee[endroit_a_inserer:])
-
-
     return liste_triee
-
 print(trier([1,7,4,0,0,7,2,55,5,0,65]))
-
-
-def killdoublons(liste):
-
-    return liste
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
