@@ -39,7 +39,7 @@ def trier(liste):
 
         
 
-
+​https://prod.liveshare.vsengsaas.visualstudio.com/join?4D4FFBD98B27D757FC3A377BA414E1CE6A51
 
 
 
