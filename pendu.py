@@ -29,10 +29,9 @@ print(element)
 #Tri de tableaux
 def trier(liste):
     liste_triee=[]
-    for index in range(len(liste)):
-        if index==0:
-            liste_triee[0]=liste[0]
-        if liste[index]
+    liste_triee[0]=liste[0]
+    for index in range(1,(len(liste)-1)):
+        
 
 
 
