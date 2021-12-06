@@ -6,8 +6,7 @@ def create_pile(capa):
 
 
 def nombre_elements(pile):
-    nombre_elements_pile=pile[0]
-    return nombre_elements_pile
+    return pile[0]
 
 
 
@@ -23,7 +22,7 @@ def empiler(element,pile):
 
 
 def depiler(pile):
-    element=pile[0]
+    element=pile[nombre_elements(pile)+1]
     pile-=pile[0]
     return pile,element
 
