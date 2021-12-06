@@ -3,13 +3,15 @@ def create_pile(capa):
     return pile
 
 
+
 def nombre_elements(pile):
     nombre_elements_pile=pile[0]
     return nombre_elements_pile
 
 
 
-
+def empiler(element,pile):
+    
 
 
 
