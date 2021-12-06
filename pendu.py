@@ -32,7 +32,7 @@ def trier(liste):
     liste_triee[0]=liste[0]
     for index_liste in range(1,(len(liste)-1)):
         index_pge=0
-        while liste_triee[index_liste]!=None:
+        while liste_triee[index_pge]!=None:
             if liste[index_liste]>liste_triee[index_pge]:
                 index_pge+=1
         for id2 in range(0,index_pge):
@@ -43,7 +43,6 @@ def trier(liste):
 
 print(trier([1,7,4,7,2,5,0,65]))
 
-https://vscode.dev/liveshare/C9D67E2AE15BD2BAD84AB12C3848B8406218
 
 def killdoublons(liste):
 
