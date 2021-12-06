@@ -45,35 +45,27 @@ print(trier([1,7,4,0,0,7,2,55,5,0,65]))
 
 def partie():
     mot=str(input("Quel est le mot : "))
-    chances=8
-    lettres_trouvées=(["*"]*len(mot))
-    gagné=False
-    echec=False
-    afficher_partie(lettres_trouvées,chances)
-    while (gagné==False and echec==False):
-        lettre=input(str("Quelle est la lettre : "))
-
-        if lettre in mot:
-            for index in range(len(mot)):
-                if mot[index]==lettre:
-                    lettres_trouvées[index]=lettre
-            afficher_partie(lettres_trouvées,chances)
-        else:
-            chances-=1
-            if chances == 0:
-                print ('\n' * 12)
-                print ("Bouh vous avez perdu, c'est nul")
-                echec=True
-            else:
-                afficher_partie(lettres_trouvées,chances)
-        if lettres_trouvées==list(mot):
-            gagné=True
-            print ('\n' * 12)
-            print ("Bravo vous avez gagné, c'est bien")
-
-def afficher_partie(lettres_trouvées,chances):
     print ('\n' * 12)
-    print("Vous avez trouvé : ",lettres_trouvées)
-    print("Il vous reste ",chances," chances")
+    chances=8
+    mot_a_trouver=("*"*len(mot))
+    afficher_partie(mot_a_trouver,chances)
+
+def transformer_casse(lettre):
+    rt=None
+    rg=0
+    Lmaj=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+    Lmin=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+    for id in Lmaj:
+        if lettre==id:
+            rt=lettre
+    for id in Lmin:
+        if lettre==id:
+            rt=Lmaj[rg]
+        rg=rg+1
+    return rt
+
+def afficher_partie(mot_a_trouver,chances):
+    print(mot_a_trouver)
+    print(chances)
 
 partie()
