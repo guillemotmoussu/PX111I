@@ -8,11 +8,10 @@ def create_pile(capa):
 def nombre_elements(pile):
     nombre_elements_pile=pile[0]
     return nombre_elements_pile
-    jaaj
 
 
 
-def empiler(element,pile):
+#def empiler(element,pile):
     
 
 
