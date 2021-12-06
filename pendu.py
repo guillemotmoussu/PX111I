@@ -18,8 +18,8 @@ def empiler(element,pile):
 
 
 def depiler(pile):
-    element=pile[nombre_elements(pile)]
-    pile[nombre_elements(pile)]=None
+    element=pile[pile[0]]
+    pile[0]-=1
     return pile,element
 
 
