@@ -11,15 +11,15 @@ def nombre_elements(pile):
 
 
 def empiler(element,pile):
-    pile[pile[0]+1]=element
+    pile[nombre_elements(pile)+1]=element
     pile[0]+=1
     return pile
 
 
 
 def depiler(pile):
-    element=pile[nombre_elements(pile)+1]
-    pile-=pile[0]
+    element=pile[nombre_elements(pile)]
+    pile[nombre_elements(pile)]=None
     return pile,element
 
 
