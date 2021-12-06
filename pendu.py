@@ -24,7 +24,7 @@ pile=empiler("j",pile)
 print(nombre_elements(pile))
 pile,element=depiler(pile)
 print(element)
-'''
+
 
 #Tri de tableaux
 
@@ -40,3 +40,18 @@ def trier(liste):
     return liste_triee
 print(trier([1,7,4,0,0,7,2,55,5,0,65]))
 
+'''
+
+
+def partie():
+    mot=str(input("Quel est le mot : "))
+    print ('\n' * 12)
+    chances=8
+    mot_a_trouver=("*"*len(mot))
+    afficher_partie(mot_a_trouver,chances)
+
+def afficher_partie(mot_a_trouver,chances):
+    print(mot_a_trouver)
+    print(chances)
+
+partie()
