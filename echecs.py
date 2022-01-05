@@ -86,7 +86,7 @@ def is_position_valid_T(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y
                 position_valide=False
     return position_valide
 
-def is_position_valid_F(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide):
+def is_position_valid_F(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide):-
     if x_arrivée-x_départ!=y_arrivée-y_départ and x_arrivée-x_départ!=y_départ-y_arrivée:
         position_valide=False
     else:
