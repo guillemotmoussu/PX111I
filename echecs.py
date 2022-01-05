@@ -108,7 +108,7 @@ def is_position_valid_F(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y
                     if plateau[index-x_arrivée+y_départ][index]!="    ":
                         position_valide=False
     return position_valide
-    
+    juuj
 def is_position_valid_RE(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide):
     if type_piece=="RE":
         if x_arrivée-x_départ!=y_arrivée-y_départ and x_arrivée-x_départ!=y_départ-y_arrivée and x_arrivée!=x_départ and y_arrivée!=y_départ:
