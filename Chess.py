@@ -1,18 +1,14 @@
-"""
-Here's my chess code
-Let's do this
-Good luck myself
-"""
 
+###########constantes############
 LsJuicerW = ["R1w", "N1w", "B1w", "Q1w", "KGw", "B2w", "N2w", "R2w"]
 LsPawnsW = ["P1w", "P2w", "P3w", "P4w", "   ", "P6w", "P7w", "P8w"]
 LsJuicerB = ["R1b", "N1b", "B1b", "Q1b", "KGb", "B2b", "N2b", "R2b"]
 LsPawnsB = ["P1b", "P2b", "P3b", "P4b", "   ", "P6b", "P7b", "P8b"]
 EmptyFile = ["   ", "   ", "   ", "   ", "   ", "   ", "   ", "   "]
 columns = ["A", "B", "C", "D", "E", "F", "G", "H"]
+#################################
 
-
-def InitChessBoard():
+def InitChessBoard(): #initialise le plateau, avec les lettres et les chiffres pour identifier les positions
     ChessBoard = ["jaaj"]+[LsJuicerW]+[LsPawnsW]+4*[EmptyFile]+[LsPawnsB]+[LsJuicerB]+["jaaj"]
     ChessBoard[0] = ["(-)", "(A)", "(B)", "(C)", "(D)", "(E)", "(F)", "(G)", "(H)", "(-)"]
     ChessBoard[1] = ["(1)"]+ChessBoard[1]+["(-)"]
@@ -27,7 +23,7 @@ def InitChessBoard():
     return ChessBoard
 
 
-def PrintChessBoard(matrix):
+def PrintChessBoard(matrix):    #affichage du plateau de jeu
     print("[====================================================================]")
     for index in range(len(matrix)-1):
         print(matrix[9-index])
@@ -44,7 +40,7 @@ def LetterTrad(letter):     #traduction des A,B,C sur le plateau en 1,2,3 pour l
     return number
 
 
-def InputPiece(Bturn, ChessBoard):
+def InputPiece(Bturn, ChessBoard):  #fonction permettant d'ajouter une pièce sur le plateau
     approved = False        #variable d'approbation
     rank = 0                #ligne de la pièce
     file = 0                #colonne de la pièce
@@ -67,8 +63,8 @@ def InputPiece(Bturn, ChessBoard):
 
 
 def LocatePiece(piece, ChessBoard):     #localise une pièce si elle existe
-    fileP = 0       #colonne de la pièce sur le plateau
-    rankP = 0       #ligne de la pièce sur le plateau
+    fileP = 0                           #colonne de la pièce sur le plateau
+    rankP = 0                           #ligne de la pièce sur le plateau
     found = False
     for rank in range(8):
         for file in range(8):
@@ -76,10 +72,10 @@ def LocatePiece(piece, ChessBoard):     #localise une pièce si elle existe
                 found = True
                 rankP = rank + 1
                 fileP = file + 1
-    return[rankP, fileP, found]     #retourne found à false si la pièce n'existe pas sur le plateau
+    return[rankP, fileP, found]         #retourne found à false si la pièce n'existe pas sur le plateau
 
 
-def InputCoords(piece):
+def InputCoords(piece):         #entrée des coordonnées
     approved = False
     while approved is False:    #vérification de la validité de la position, et reboucle si elle est fausse
         coords = input("Where will you place your " + piece[0] + piece[1] + " ? : ")
@@ -93,10 +89,10 @@ def InputCoords(piece):
                     approved = True
         if approved==False:
             print("\n " + coords + " is not a valid position...\n (expected: File from A to H, Rank from 1 to 8, ex: E5)")    
-    return coords
+    return coords               #retourne les coordonnées (valides)
 
 
-def MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):
+def MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):      #déplacement des pièces
     Movedone = False
     if piece[0] == "K":
         MoveK = MoveKing(piece, actualcoords, coords, ChessBoard, Movedone, RoqueOK1, RoqueOK2)
@@ -304,20 +300,21 @@ def MovePawn(piece, actualcoords, coords, ChessBoard, Movedone, GhostPawn):
         Pawnmove = 1
     if piece[2] == "b":
         Pawnmove = -1
-    if coords[0] == actualcoords[0] and coords[1] == actualcoords[1] + Pawnmove:
+    if coords[0] == actualcoords[0] + Pawnmove and coords[1] == actualcoords[1]:
         if ChessBoard[coords[0]][coords[1]] == "   ":
             ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
             ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
             Movedone = True
-    if coords[0] == actualcoords[0] and coords[1] == actualcoords[1] + 2*Pawnmove:
+    if coords[0] == actualcoords[0] + 2*Pawnmove and coords[1] == actualcoords[1]:
         if ChessBoard[coords[0]][coords[1]] == "   ":
             ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
             ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
+            GhostPawn = [actualcoords[0] + Pawnmove, actualcoords[1]]
             Movedone = True
     return (ChessBoard, Movedone, GhostPawn)
 
 
-def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):
+def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):     #tour de jeu
     if Bturn is False:
         print("\n It's White's turn !\n")
     if Bturn is True:
@@ -327,8 +324,8 @@ def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):
     GetPiece = InputPiece(Bturn, ChessBoard)
     piece = GetPiece[0]
     actualcoords = [GetPiece[1], GetPiece[2]]
-    coords = InputCoords(piece)     #coordonnées futures entrées par l'utilisateur
-    displaycoords = coords          #utilisé dans les messages d'erreurs pour l'utilisateur
+    coords = InputCoords(piece)                          #coordonnées futures entrées par l'utilisateur
+    displaycoords = coords                               #utilisé dans les messages d'erreurs pour l'utilisateur
     coords = [int(coords[1]), LetterTrad(coords[0])]     #traduction des coordonnées en nombres
     if ChessBoard[coords[0]][coords[1]][2] != piece[2]:  #bloque les mouvements sur place et la prise d'une de ses pieces
         move = MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn)
@@ -374,4 +371,6 @@ def StartGame():
             Bturn = not(Bturn)
     return(ChessBoard, CheckMate)
 
+
+#main
 StartGame()
