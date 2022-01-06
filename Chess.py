@@ -36,7 +36,7 @@ def PrintChessBoard(matrix):
     print("[====================================================================]")
 
 
-def LetterTrad(letter):     #traduction des A,B,C en 1,2,3 sur le plateau
+def LetterTrad(letter):     #traduction des A,B,C sur le plateau en 1,2,3 pour le programme
     number = 0
     for index in range(8):
         if letter == columns[index]:
@@ -45,39 +45,30 @@ def LetterTrad(letter):     #traduction des A,B,C en 1,2,3 sur le plateau
 
 
 def InputPiece(Bturn, ChessBoard):
-    approved = False
-    rank = 0
-    file = 0
-    piece = input("Which piece to move ? : ")
-    if Bturn is True:  #ajoute b ou w selon le tour du joueur automatiquement
+    approved = False        #variable d'approbation
+    rank = 0                #ligne de la pièce
+    file = 0                #colonne de la pièce
+    if Bturn is True:       #détermine b (black) ou w (white) selon le tour du joueur automatiquement
         turn = "b"
     if Bturn is False:
         turn = "w"
-    if len(piece) == 2:
-        if piece[0] == "K" or piece[0] == "Q" or piece[0] == "B" or piece[0] == "N" or piece[0] == "R" or piece[0] == "P":
-            piece = piece + turn
-            locate = LocatePiece(piece, ChessBoard)
-            approved = locate[2]
-            rank = locate[0]
-            file = locate[1]
     while approved is False:
-        if len(piece) < 2:
-            piece = piece + "   "
-        print("\n " + piece[0] + piece[1] + " is not a valid piece...\n (expecting something like P4 or KG)")
-        piece = input("Which piece to move ? : ")
-        if len(piece) == 2:
+        piece = input("\nWhich piece to move ? : ")          
+        if len(piece) == 2:     #longueur nominale
             if piece[0] == "K" or piece[0] == "Q" or piece[0] == "B" or piece[0] == "N" or piece[0] == "R" or piece[0] == "P":
-                piece = piece + turn
-                locate = LocatePiece(piece, ChessBoard)
+                piece = piece + turn      #on ajoute à la variable le joueur qui possède cette pièce
+                locate = LocatePiece(piece, ChessBoard)     #localisation de la pièce sur le plateau
                 approved = locate[2]
                 rank = locate[0]
                 file = locate[1]
-    return [piece, rank, file]
+        if approved==False:
+            print("\n This piece is not a valid piece...\n (expecting something like P4 or KG)")
+    return [piece, rank, file]  #retourne la pièce (valide), et sa position
 
 
-def LocatePiece(piece, ChessBoard):
-    fileP = 0
-    rankP = 0
+def LocatePiece(piece, ChessBoard):     #localise une pièce si elle existe
+    fileP = 0       #colonne de la pièce sur le plateau
+    rankP = 0       #ligne de la pièce sur le plateau
     found = False
     for rank in range(8):
         for file in range(8):
@@ -85,25 +76,14 @@ def LocatePiece(piece, ChessBoard):
                 found = True
                 rankP = rank + 1
                 fileP = file + 1
-    return[rankP, fileP, found]
+    return[rankP, fileP, found]     #retourne found à false si la pièce n'existe pas sur le plateau
 
 
 def InputCoords(piece):
     approved = False
-    '''
-    coords = input("Where will you place your " + piece[0] + piece[1] + " ? : ")
-    if len(coords) == 2:        
-        Verif1 = coords[0] == "A" or coords[0] == "B" or coords[0] == "C" or coords[0] == "D"
-        Verif2 = coords[0] == "E" or coords[0] == "F" or coords[0] == "G" or coords[0] == "H"
-        Verif3 = coords[1] == "1" or coords[1] == "2" or coords[1] == "3" or coords[1] == "4"
-        Verif4 = coords[1] == "5" or coords[1] == "6" or coords[1] == "7" or coords[1] == "8"
-        if Verif1 or Verif2:
-            if Verif3 or Verif4:
-                approved = True
-    '''
-    while approved is False:    #si la position est incorrecte, on la redemande
+    while approved is False:    #vérification de la validité de la position, et reboucle si elle est fausse
         coords = input("Where will you place your " + piece[0] + piece[1] + " ? : ")
-        if len(coords) == 2:    #vérification de la validité de la position
+        if len(coords) == 2:    #longueur attendue de la réponse
             Verif1 = coords[0] == "A" or coords[0] == "B" or coords[0] == "C" or coords[0] == "D"
             Verif2 = coords[0] == "E" or coords[0] == "F" or coords[0] == "G" or coords[0] == "H"
             Verif3 = coords[1] == "1" or coords[1] == "2" or coords[1] == "3" or coords[1] == "4"
@@ -111,15 +91,12 @@ def InputCoords(piece):
             if Verif1 or Verif2:
                 if Verif3 or Verif4:
                     approved = True
-
-
-        print("\n " + coords + " is not a valid position...\n (expected: File from A to H, Rank from 1 to 8, ex: E5)")
-        
-        
+        if approved==False:
+            print("\n " + coords + " is not a valid position...\n (expected: File from A to H, Rank from 1 to 8, ex: E5)")    
     return coords
 
 
-def MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2):
+def MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):
     Movedone = False
     if piece[0] == "K":
         MoveK = MoveKing(piece, actualcoords, coords, ChessBoard, Movedone, RoqueOK1, RoqueOK2)
@@ -150,10 +127,11 @@ def MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2):
             if piece[1] == "2":
                 RoqueOK2 = False
     if piece[0] == "P":
-        MoveP = MovePawn(piece, actualcoords, coords, ChessBoard, Movedone)
+        MoveP = MovePawn(piece, actualcoords, coords, ChessBoard, Movedone, GhostPawn)
         ChessBoard = MoveP[0]
         Movedone = MoveP[1]
-    return(ChessBoard, Movedone, RoqueOK1, RoqueOK2)
+        GhostPawn = MoveP[2]
+    return(ChessBoard, Movedone, RoqueOK1, RoqueOK2, GhostPawn)
 
 
 def MoveKing(piece, actualcoords, coords, ChessBoard, Movedone, RoqueOK1, RoqueOK2):
@@ -276,6 +254,18 @@ def MoveBishop(piece, actualcoords, coords, ChessBoard, Movedone):
 
 
 def MoveKnight(piece, actualcoords, coords, ChessBoard, Movedone):
+    Move1 = [actualcoords[0]+1, actualcoords[1]+2]
+    Move2 = [actualcoords[0]+1, actualcoords[1]-2]
+    Move3 = [actualcoords[0]-1, actualcoords[1]+2]
+    Move4 = [actualcoords[0]-1, actualcoords[1]-2]
+    Move5 = [actualcoords[0]+2, actualcoords[1]+1]
+    Move6 = [actualcoords[0]+2, actualcoords[1]-1]
+    Move7 = [actualcoords[0]-2, actualcoords[1]+1]
+    Move8 = [actualcoords[0]-2, actualcoords[1]-1]
+    if coords in [Move1, Move2, Move3, Move4, Move5, Move6, Move7, Move8]:
+        ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
+        ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
+        Movedone = True
     return (ChessBoard, Movedone)
 
 
@@ -308,27 +298,43 @@ def MoveRook(piece, actualcoords, coords, ChessBoard, Movedone):
     return (ChessBoard, Movedone)
 
 
-def MovePawn(piece, actualcoords, coords, ChessBoard, Movedone):
-    return (ChessBoard, Movedone)
+def MovePawn(piece, actualcoords, coords, ChessBoard, Movedone, GhostPawn):
+    Pawnmove = 0
+    if piece[2] == "w":
+        Pawnmove = 1
+    if piece[2] == "b":
+        Pawnmove = -1
+    if coords[0] == actualcoords[0] and coords[1] == actualcoords[1] + Pawnmove:
+        if ChessBoard[coords[0]][coords[1]] == "   ":
+            ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
+            ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
+            Movedone = True
+    if coords[0] == actualcoords[0] and coords[1] == actualcoords[1] + 2*Pawnmove:
+        if ChessBoard[coords[0]][coords[1]] == "   ":
+            ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
+            ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
+            Movedone = True
+    return (ChessBoard, Movedone, GhostPawn)
 
 
-def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2):
+def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):
     if Bturn is False:
-        print("\n\n\n\n It's White's turn !\n")
+        print("\n It's White's turn !\n")
     if Bturn is True:
-        print("\n\n\n\n It's Black's turn !\n")
+        print("\n It's Black's turn !\n")
     Turndone = False
     PrintChessBoard(ChessBoard)
     GetPiece = InputPiece(Bturn, ChessBoard)
     piece = GetPiece[0]
     actualcoords = [GetPiece[1], GetPiece[2]]
-    coords = InputCoords(piece)     #coordonnées futures
-    displaycoords = coords
-    coords = [int(coords[1]), LetterTrad(coords[0])]
-    if ChessBoard[coords[0]][coords[1]][2] != piece[2]:
-        move = MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2)
+    coords = InputCoords(piece)     #coordonnées futures entrées par l'utilisateur
+    displaycoords = coords          #utilisé dans les messages d'erreurs pour l'utilisateur
+    coords = [int(coords[1]), LetterTrad(coords[0])]     #traduction des coordonnées en nombres
+    if ChessBoard[coords[0]][coords[1]][2] != piece[2]:  #bloque les mouvements sur place et la prise d'une de ses pieces
+        move = MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn)
         RoqueOK1 = move[2]
         RoqueOK2 = move[3]
+        GhostPawn = move[4]
         if move[1] is True:
             ChessBoard = move[0]
             Turndone = True
@@ -336,35 +342,36 @@ def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2):
             print("\n [!] Invalid Move. Will be explanied in the future...\n")
     else:
         print("\n [!] You already have a piece on " + displaycoords + "...\n")
-    return (ChessBoard, Turndone, RoqueOK1, RoqueOK2)
+    return (ChessBoard, Turndone, RoqueOK1, RoqueOK2, GhostPawn)
 
 
 "More functions comming before this"
 
 
 def StartGame():
+    print("\n\n\n\n\n")
     Bturn = False                       #on commence avec les blancs
     RoqueOKw1 = True                    #les roques sont possibles au début
-    RoqueOKw2 = True
-    RoqueOKb1 = True
+    RoqueOKw2 = True                    #on a besoin de deux variables par joueur
+    RoqueOKb1 = True                    #une pour le grand roque, et l'autre pour le petit roque
     RoqueOKb2 = True
+    GhostPawn = [0, 0]
     ChessBoard = InitChessBoard()
     CheckMate = False
     while CheckMate is False:
         if Bturn is False:
-            play = PlayTurn(Bturn, ChessBoard, RoqueOKw1, RoqueOKw2)
+            play = PlayTurn(Bturn, ChessBoard, RoqueOKw1, RoqueOKw2, GhostPawn)
             RoqueOKw1 = play[2]
             RoqueOKw2 = play[3]
+            GhostPawn = play[4]
         if Bturn is True:
-            play = PlayTurn(Bturn, ChessBoard, RoqueOKb1, RoqueOKb2)
+            play = PlayTurn(Bturn, ChessBoard, RoqueOKb1, RoqueOKb2, GhostPawn)
             RoqueOKb1 = play[2]
             RoqueOKb2 = play[3]
+            GhostPawn = play[4]
         if play[1] is True:
             ChessBoard = play[0]
             Bturn = not(Bturn)
     return(ChessBoard, CheckMate)
 
-
-print("\n\n\n")
 StartGame()
-"Need CodeStyle"
