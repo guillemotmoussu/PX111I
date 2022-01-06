@@ -50,9 +50,10 @@ def is_position_valid(plateau,type_piece,a_noir_de_jouer,x_départ,y_départ,x_a
     if plateau[y_arrivée][x_arrivée][3]=="N" and a_noir_de_jouer==True:
         position_valide=False
     if position_valide==True:
-        if type_pièce==X:
-            appel fonction
-        elif...
+        if type_pièce==T:
+            is_position_valid_T(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide)
+        elif True:
+            print("jaaj")
     return position_valide
 
 def is_position_valid_RO(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide):
@@ -108,7 +109,7 @@ def is_position_valid_F(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y
                     if plateau[index-x_arrivée+y_départ][index]!="    ":
                         position_valide=False
     return position_valide
-    
+   
 def is_position_valid_RE(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide):
     if type_piece=="RE":
         if x_arrivée-x_départ!=y_arrivée-y_départ and x_arrivée-x_départ!=y_départ-y_arrivée and x_arrivée!=x_départ and y_arrivée!=y_départ:
@@ -213,6 +214,7 @@ def type_de_pièce(pièce):
     return type_pièce
 
 def move_piece(plateau,a_noir_de_jouer):
+    print_game_board(plateau,a_noir_de_jouer,["jaaaj"],["jaaaj"])
     pièce=str(input("Quelle pièce à déplacer ? "))
     if a_noir_de_jouer==True:
         if pièce not in (liste_pièces_noires or liste_pions_noirs):
@@ -229,4 +231,5 @@ def move_piece(plateau,a_noir_de_jouer):
                     x_départ=plateau[index_y,index_x]
     x_arrivée=(int(input("Quelle est la nouvelle colonne ? ")))
     y_arrivée=(int(input("Quelle est la nouvelle ligne ? ")))
-    
+    return "jaaj"
+move_piece(initialise_game_board(),True)
