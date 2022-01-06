@@ -233,5 +233,3 @@ def move_piece(plateau,a_noir_de_jouer):
     y_arrivée=(int(input("Quelle est la nouvelle ligne ? ")))
     return "jaaj"
 move_piece(initialise_game_board(),True)
-
-tout marche ?
