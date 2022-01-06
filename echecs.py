@@ -21,7 +21,7 @@ def initialise_game_board():
     plateau[6]=liste_pions_noirs
     plateau[7]=liste_pièces_noires 
     return plateau   
-        
+
 def print_matrix(matrice):
     for index in range(len(matrice)):
         print(matrice[index])
