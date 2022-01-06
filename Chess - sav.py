@@ -36,7 +36,7 @@ def PrintChessBoard(matrix):
     print("[====================================================================]")
 
 
-def LetterTrad(letter):     #traduction des A,B,C en 1,2,3 sur le plateau
+def LetterTrad(letter):
     number = 0
     for index in range(8):
         if letter == columns[index]:
@@ -49,7 +49,7 @@ def InputPiece(Bturn, ChessBoard):
     rank = 0
     file = 0
     piece = input("Which piece to move ? : ")
-    if Bturn is True:  #ajoute b ou w selon le tour du joueur automatiquement
+    if Bturn is True:
         turn = "b"
     if Bturn is False:
         turn = "w"
@@ -63,7 +63,7 @@ def InputPiece(Bturn, ChessBoard):
     while approved is False:
         if len(piece) < 2:
             piece = piece + "   "
-        print("\n " + piece[0] + piece[1] + " is not a valid piece...\n (expecting something like P4 or KG)")
+        print("\n " + piece[0] + piece[1] + " is not a valid piece on the board...\n (expecting something you have here)")
         piece = input("Which piece to move ? : ")
         if len(piece) == 2:
             if piece[0] == "K" or piece[0] == "Q" or piece[0] == "B" or piece[0] == "N" or piece[0] == "R" or piece[0] == "P":
@@ -90,9 +90,8 @@ def LocatePiece(piece, ChessBoard):
 
 def InputCoords(piece):
     approved = False
-    '''
     coords = input("Where will you place your " + piece[0] + piece[1] + " ? : ")
-    if len(coords) == 2:        
+    if len(coords) == 2:
         Verif1 = coords[0] == "A" or coords[0] == "B" or coords[0] == "C" or coords[0] == "D"
         Verif2 = coords[0] == "E" or coords[0] == "F" or coords[0] == "G" or coords[0] == "H"
         Verif3 = coords[1] == "1" or coords[1] == "2" or coords[1] == "3" or coords[1] == "4"
@@ -100,10 +99,10 @@ def InputCoords(piece):
         if Verif1 or Verif2:
             if Verif3 or Verif4:
                 approved = True
-    '''
-    while approved is False:    #si la position est incorrecte, on la redemande
+    while approved is False:
+        print("\n " + coords + " is not a valid position...\n (expected: File from A to H, Rank from 1 to 8, ex: E5)")
         coords = input("Where will you place your " + piece[0] + piece[1] + " ? : ")
-        if len(coords) == 2:    #vérification de la validité de la position
+        if len(coords) == 2:
             Verif1 = coords[0] == "A" or coords[0] == "B" or coords[0] == "C" or coords[0] == "D"
             Verif2 = coords[0] == "E" or coords[0] == "F" or coords[0] == "G" or coords[0] == "H"
             Verif3 = coords[1] == "1" or coords[1] == "2" or coords[1] == "3" or coords[1] == "4"
@@ -111,11 +110,6 @@ def InputCoords(piece):
             if Verif1 or Verif2:
                 if Verif3 or Verif4:
                     approved = True
-
-
-        print("\n " + coords + " is not a valid position...\n (expected: File from A to H, Rank from 1 to 8, ex: E5)")
-        
-        
     return coords
 
 
@@ -198,51 +192,6 @@ def MoveKing(piece, actualcoords, coords, ChessBoard, Movedone, RoqueOK1, RoqueO
 
 
 def MoveQueen(piece, actualcoords, coords, ChessBoard, Movedone):
-    EmptyTiles = False
-    if coords[0] - actualcoords[0] == coords[1] - actualcoords[1] and coords[0] < actualcoords[0]:
-        EmptyTiles = True
-        for index in range(coords[0]+1, actualcoords[0]):
-            if ChessBoard[index][coords[1]-coords[0]+index] != "   ":
-                EmptyTiles = False
-    if coords[0] - actualcoords[0] == coords[1] - actualcoords[1] and coords[0] > actualcoords[0]:
-        EmptyTiles = True
-        for index in range(actualcoords[0]+1, coords[0]):
-            if ChessBoard[index][actualcoords[1]-actualcoords[0]+index] != "   ":
-                EmptyTiles = False
-    if coords[0] - actualcoords[0] == actualcoords[1] - coords[1] and coords[0] < actualcoords[0]:
-        EmptyTiles = True
-        for index in range(coords[0]+1, actualcoords[0]):
-            if ChessBoard[index][coords[1]+coords[0]-index] != "   ":
-                EmptyTiles = False
-    if coords[0] - actualcoords[0] == actualcoords[1] - coords[1] and coords[0] > actualcoords[0]:
-        EmptyTiles = True
-        for index in range(actualcoords[0]+1, coords[0]):
-            if ChessBoard[index][actualcoords[1]+actualcoords[0]-index] != "   ":
-                EmptyTiles = False
-    if coords[0] < actualcoords[0] and coords[1] == actualcoords[1]:
-        EmptyTiles = True
-        for index in range(coords[0]+1, actualcoords[0]):
-            if ChessBoard[index][actualcoords[1]] != "   ":
-                EmptyTiles = False
-    if coords[0] > actualcoords[0] and coords[1] == actualcoords[1]:
-        EmptyTiles = True
-        for index in range(actualcoords[0]+1, coords[0]):
-            if ChessBoard[index][actualcoords[1]] != "   ":
-                EmptyTiles = False
-    if coords[0] == actualcoords[0] and coords[1] < actualcoords[1]:
-        EmptyTiles = True
-        for index in range(coords[1]+1, actualcoords[1]):
-            if ChessBoard[actualcoords[0]][index] != "   ":
-                EmptyTiles = False
-    if coords[0] == actualcoords[0] and coords[1] > actualcoords[1]:
-        EmptyTiles = True
-        for index in range(actualcoords[1]+1, coords[1]):
-            if ChessBoard[actualcoords[0]][index] != "   ":
-                EmptyTiles = False
-    if EmptyTiles is True:
-        ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
-        ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
-        Movedone = True
     return (ChessBoard, Movedone)
 
 
@@ -251,21 +200,27 @@ def MoveBishop(piece, actualcoords, coords, ChessBoard, Movedone):
     if coords[0] - actualcoords[0] == coords[1] - actualcoords[1] and coords[0] < actualcoords[0]:
         EmptyTiles = True
         for index in range(coords[0]+1, actualcoords[0]):
+            print(ChessBoard[index][coords[1]-coords[0]+index])
             if ChessBoard[index][coords[1]-coords[0]+index] != "   ":
                 EmptyTiles = False
     if coords[0] - actualcoords[0] == coords[1] - actualcoords[1] and coords[0] > actualcoords[0]:
         EmptyTiles = True
         for index in range(actualcoords[0]+1, coords[0]):
+            print(ChessBoard[index][actualcoords[1]-actualcoords[0]+index])
             if ChessBoard[index][actualcoords[1]-actualcoords[0]+index] != "   ":
                 EmptyTiles = False
     if coords[0] - actualcoords[0] == actualcoords[1] - coords[1] and coords[0] < actualcoords[0]:
         EmptyTiles = True
         for index in range(coords[0]+1, actualcoords[0]):
+            print(ChessBoard[index][coords[1]+coords[0]-index])
             if ChessBoard[index][coords[1]+coords[0]-index] != "   ":
                 EmptyTiles = False
     if coords[0] - actualcoords[0] == actualcoords[1] - coords[1] and coords[0] > actualcoords[0]:
         EmptyTiles = True
         for index in range(actualcoords[0]+1, coords[0]):
+            print(index)
+            print(actualcoords[1]-actualcoords[0]-index)
+            print(ChessBoard[index][actualcoords[1]+actualcoords[0]-index])
             if ChessBoard[index][actualcoords[1]+actualcoords[0]-index] != "   ":
                 EmptyTiles = False
     if EmptyTiles is True:
@@ -284,21 +239,25 @@ def MoveRook(piece, actualcoords, coords, ChessBoard, Movedone):
     if coords[0] < actualcoords[0] and coords[1] == actualcoords[1]:
         EmptyTiles = True
         for index in range(coords[0]+1, actualcoords[0]):
+            print(ChessBoard[index][actualcoords[1]])
             if ChessBoard[index][actualcoords[1]] != "   ":
                 EmptyTiles = False
     if coords[0] > actualcoords[0] and coords[1] == actualcoords[1]:
         EmptyTiles = True
         for index in range(actualcoords[0]+1, coords[0]):
+            print(ChessBoard[index][actualcoords[1]])
             if ChessBoard[index][actualcoords[1]] != "   ":
                 EmptyTiles = False
     if coords[0] == actualcoords[0] and coords[1] < actualcoords[1]:
         EmptyTiles = True
         for index in range(coords[1]+1, actualcoords[1]):
+            print(ChessBoard[index][actualcoords[1]])
             if ChessBoard[actualcoords[0]][index] != "   ":
                 EmptyTiles = False
     if coords[0] == actualcoords[0] and coords[1] > actualcoords[1]:
         EmptyTiles = True
         for index in range(actualcoords[1]+1, coords[1]):
+            print(ChessBoard[index][actualcoords[1]])
             if ChessBoard[actualcoords[0]][index] != "   ":
                 EmptyTiles = False
     if EmptyTiles is True:
@@ -322,9 +281,13 @@ def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2):
     GetPiece = InputPiece(Bturn, ChessBoard)
     piece = GetPiece[0]
     actualcoords = [GetPiece[1], GetPiece[2]]
-    coords = InputCoords(piece)     #coordonnées futures
+    coords = InputCoords(piece)
+    print(piece)
+    print(actualcoords)
+    print(coords)
     displaycoords = coords
     coords = [int(coords[1]), LetterTrad(coords[0])]
+    print(coords)
     if ChessBoard[coords[0]][coords[1]][2] != piece[2]:
         move = MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2)
         RoqueOK1 = move[2]
@@ -343,8 +306,8 @@ def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2):
 
 
 def StartGame():
-    Bturn = False                       #on commence avec les blancs
-    RoqueOKw1 = True                    #les roques sont possibles au début
+    Bturn = False
+    RoqueOKw1 = True
     RoqueOKw2 = True
     RoqueOKb1 = True
     RoqueOKb2 = True

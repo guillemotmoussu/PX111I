@@ -50,7 +50,7 @@ def is_position_valid(plateau,type_piece,a_noir_de_jouer,x_départ,y_départ,x_a
     if plateau[y_arrivée][x_arrivée][3]=="N" and a_noir_de_jouer==True:
         position_valide=False
     if position_valide==True:
-        if type_pièce==T:
+        if type_piece=="T":
             is_position_valid_T(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide)
         elif True:
             print("jaaj")
@@ -111,43 +111,42 @@ def is_position_valid_F(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y
     return position_valide
    
 def is_position_valid_RE(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide):
-    if type_piece=="RE":
-        if x_arrivée-x_départ!=y_arrivée-y_départ and x_arrivée-x_départ!=y_départ-y_arrivée and x_arrivée!=x_départ and y_arrivée!=y_départ:
-            position_valide=False
-        else:
-            if is_in_matrix(plateau,x_arrivée,y_arrivée):
-                if x_arrivée<x_départ and y_arrivée<y_départ:
-                    for index in range (x_arrivée+1,x_départ-1):
-                        if plateau[index-x_arrivée+y_arrivée][index]!="    ":
-                            position_valide=False
-                if x_départ<x_arrivée and y_arrivée<y_départ:
-                    for index in range (x_départ+1,x_arrivée-1):
-                        if plateau[index-x_départ+y_arrivée][index]!="    ":
-                            position_valide=False
-                if x_départ<x_arrivée and y_départ<y_arrivée:
-                    for index in range (x_départ+1,x_arrivée-1):
-                        if plateau[index-x_départ+y_départ][index]!="    ":
-                            position_valide=False
-                if x_arrivée<x_départ and y_départ<y_arrivée:
-                    for index in range (x_arrivée+1,x_départ-1):
-                        if plateau[index-x_arrivée+y_départ][index]!="    ":
-                            position_valide=False
-                if x_arrivée<x_départ and y_départ==y_arrivée:
-                    for index in range (x_arrivée+1,x_départ-1):
-                        if plateau[y_départ][index]!="    ":
-                            position_valide=False
-                if x_départ<x_arrivée and y_départ==y_arrivée:
-                    for index in range (x_départ+1,x_arrivée-1):
-                        if plateau[y_départ][index]!="    ":
-                            position_valide=False
-                if y_arrivée<y_départ and y_départ==y_arrivée:
-                    for index in range (y_arrivée+1,y_départ-1):
-                        if plateau[index][x_départ]!="    ":
-                            position_valide=False
-                if y_départ<y_arrivée and y_départ==y_arrivée:
-                    for index in range (y_départ+1,y_arrivée-1):
-                        if plateau[y_départ][index]!="    ":
-                            position_valide=False
+    if x_arrivée-x_départ!=y_arrivée-y_départ and x_arrivée-x_départ!=y_départ-y_arrivée and x_arrivée!=x_départ and y_arrivée!=y_départ:
+        position_valide=False
+    else: 
+        if is_in_matrix(plateau,x_arrivée,y_arrivée):
+            if x_arrivée<x_départ and y_arrivée<y_départ:
+                for index in range (x_arrivée+1,x_départ-1):
+                    if plateau[index-x_arrivée+y_arrivée][index]!="    ":
+                        position_valide=False
+            if x_départ<x_arrivée and y_arrivée<y_départ:
+                for index in range (x_départ+1,x_arrivée-1):
+                    if plateau[index-x_départ+y_arrivée][index]!="    ":
+                        position_valide=False
+            if x_départ<x_arrivée and y_départ<y_arrivée:
+                for index in range (x_départ+1,x_arrivée-1):
+                    if plateau[index-x_départ+y_départ][index]!="    ":
+                        position_valide=False
+            if x_arrivée<x_départ and y_départ<y_arrivée:
+                for index in range (x_arrivée+1,x_départ-1):
+                    if plateau[index-x_arrivée+y_départ][index]!="    ":
+                        position_valide=False
+            if x_arrivée<x_départ and y_départ==y_arrivée:
+                for index in range (x_arrivée+1,x_départ-1):
+                    if plateau[y_départ][index]!="    ":
+                        position_valide=False
+            if x_départ<x_arrivée and y_départ==y_arrivée:
+                for index in range (x_départ+1,x_arrivée-1):
+                    if plateau[y_départ][index]!="    ":
+                        position_valide=False
+            if y_arrivée<y_départ and y_départ==y_arrivée:
+                for index in range (y_arrivée+1,y_départ-1):
+                    if plateau[index][x_départ]!="    ":
+                        position_valide=False
+            if y_départ<y_arrivée and y_départ==y_arrivée:
+                for index in range (y_départ+1,y_arrivée-1):
+                    if plateau[y_départ][index]!="    ":
+                        position_valide=False
     return position_valide
 
 def is_position_valid_C(plateau,a_noir_de_jouer,x_départ,y_départ,x_arrivée,y_arrivée,position_valide):
