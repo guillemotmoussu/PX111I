@@ -1,9 +1,23 @@
+'''
+Jeu fonctionnel, pour une partie en JVJ
+
+Règles implémentées :
+    - fonctions élémentaires : création, affichage du plateau...
+    - déplacement spécifique de chaque pièce
+    - prise des pièces adverses
+    - Roque
+    - Prise en passant
+    - Promotion
+
+Cependant, pas de prise en compte de l'echec / echec et mat donc le jeu ne s'arrête jamais. C'est aux utilisateurs d'arbitrer la partie
+
+'''
 
 ###########constantes############
 LsJuicerW = ["R1w", "N1w", "B1w", "Q1w", "KGw", "B2w", "N2w", "R2w"]
-LsPawnsW = ["P1w", "P2w", "P3w", "P4w", "   ", "P6w", "P7w", "P8w"]
+LsPawnsW = ["P1w", "P2w", "P3w", "P4w", "P5w", "P6w", "P7w", "P8w"]
 LsJuicerB = ["R1b", "N1b", "B1b", "Q1b", "KGb", "B2b", "N2b", "R2b"]
-LsPawnsB = ["P1b", "P2b", "P3b", "P4b", "   ", "P6b", "P7b", "P8b"]
+LsPawnsB = ["P1b", "P2b", "P3b", "P4b", "P5b", "P6b", "P7b", "P8b"]
 EmptyFile = ["   ", "   ", "   ", "   ", "   ", "   ", "   ", "   "]
 columns = ["A", "B", "C", "D", "E", "F", "G", "H"]
 #################################
@@ -92,28 +106,36 @@ def InputCoords(piece):         #entrée des coordonnées
     return coords               #retourne les coordonnées (valides)
 
 
-def MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):      #déplacement des pièces
+def MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn, NbJuicers):      #déplacement des pièces
+    #on gère chaque type de pièce séparément, dans les sous-fonctions associées
     Movedone = False
-    if piece[0] == "K":
+    if piece[0] == "K":         #partie qui correspond au roi
         MoveK = MoveKing(piece, actualcoords, coords, ChessBoard, Movedone, RoqueOK1, RoqueOK2)
         ChessBoard = MoveK[0]
         Movedone = MoveK[1]
         if Movedone is True:
             RoqueOK1 = False
             RoqueOK2 = False
-    if piece[0] == "Q":
+            GhostPawn = [0, 0]
+    if piece[0] == "Q":         #partie qui correspond à la reine
         MoveQ = MoveQueen(piece, actualcoords, coords, ChessBoard, Movedone)
         ChessBoard = MoveQ[0]
         Movedone = MoveQ[1]
-    if piece[0] == "B":
+        if Movedone is True:
+            GhostPawn = [0, 0]
+    if piece[0] == "B":         #partie qui correspond au fou
         MoveB = MoveBishop(piece, actualcoords, coords, ChessBoard, Movedone)
         ChessBoard = MoveB[0]
         Movedone = MoveB[1]
-    if piece[0] == "N":
+        if Movedone is True:
+            GhostPawn = [0, 0]
+    if piece[0] == "N":         #partie qui correspond au cavalier
         MoveN = MoveKnight(piece, actualcoords, coords, ChessBoard, Movedone)
         ChessBoard = MoveN[0]
         Movedone = MoveN[1]
-    if piece[0] == "R":
+        if Movedone is True:
+            GhostPawn = [0, 0]
+    if piece[0] == "R":         #partie qui correspond à la tour
         MoveR = MoveRook(piece, actualcoords, coords, ChessBoard, Movedone)
         ChessBoard = MoveR[0]
         Movedone = MoveR[1]
@@ -122,15 +144,18 @@ def MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, Ghost
                 RoqueOK1 = False
             if piece[1] == "2":
                 RoqueOK2 = False
-    if piece[0] == "P":
-        MoveP = MovePawn(piece, actualcoords, coords, ChessBoard, Movedone, GhostPawn)
+            GhostPawn = [0, 0]
+    if piece[0] == "P":         #partie qui correspond au pion
+        MoveP = MovePawn(piece, actualcoords, coords, ChessBoard, Movedone, GhostPawn, NbJuicers)
         ChessBoard = MoveP[0]
         Movedone = MoveP[1]
         GhostPawn = MoveP[2]
-    return(ChessBoard, Movedone, RoqueOK1, RoqueOK2, GhostPawn)
+        NbJuicers = MoveP[3]
+    return(ChessBoard, Movedone, RoqueOK1, RoqueOK2, GhostPawn, NbJuicers)
 
 
 def MoveKing(piece, actualcoords, coords, ChessBoard, Movedone, RoqueOK1, RoqueOK2):
+    #partie correspondant au roque
     if piece[2] == "w" and coords == [1, 7]:
         if ChessBoard[1][6] == "   " and ChessBoard[1][7] == "   ":
             if RoqueOK2 is True:
@@ -164,6 +189,7 @@ def MoveKing(piece, actualcoords, coords, ChessBoard, Movedone, RoqueOK1, RoqueO
                 ChessBoard[8][1] = "   "
                 Movedone = True
     if Movedone is False:
+    #partie correspondant au déplacement normal
         if coords[0] - actualcoords[0] in [-1, 0, 1] and coords[1] - actualcoords[1] in [-1, 0, 1]:
             ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
             ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
@@ -171,8 +197,8 @@ def MoveKing(piece, actualcoords, coords, ChessBoard, Movedone, RoqueOK1, RoqueO
     return (ChessBoard, Movedone)
 
 
-def MoveQueen(piece, actualcoords, coords, ChessBoard, Movedone):
-    EmptyTiles = False
+def MoveQueen(actualcoords, coords, ChessBoard, Movedone):
+    EmptyTiles = False      #vérifie que toutes les cases sur la ligne, diagonale ou colonne de déplacement sont libres
     if coords[0] - actualcoords[0] == coords[1] - actualcoords[1] and coords[0] < actualcoords[0]:
         EmptyTiles = True
         for index in range(coords[0]+1, actualcoords[0]):
@@ -213,15 +239,15 @@ def MoveQueen(piece, actualcoords, coords, ChessBoard, Movedone):
         for index in range(actualcoords[1]+1, coords[1]):
             if ChessBoard[actualcoords[0]][index] != "   ":
                 EmptyTiles = False
-    if EmptyTiles is True:
+    if EmptyTiles is True:  #si le trajet est libre, déplacement normal
         ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
         ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
         Movedone = True
     return (ChessBoard, Movedone)
 
 
-def MoveBishop(piece, actualcoords, coords, ChessBoard, Movedone):
-    EmptyTiles = False
+def MoveBishop(actualcoords, coords, ChessBoard, Movedone):
+    EmptyTiles = False  #vérifie que toutes les cases sur la diagonale de déplacement sont libres
     if coords[0] - actualcoords[0] == coords[1] - actualcoords[1] and coords[0] < actualcoords[0]:
         EmptyTiles = True
         for index in range(coords[0]+1, actualcoords[0]):
@@ -242,14 +268,15 @@ def MoveBishop(piece, actualcoords, coords, ChessBoard, Movedone):
         for index in range(actualcoords[0]+1, coords[0]):
             if ChessBoard[index][actualcoords[1]+actualcoords[0]-index] != "   ":
                 EmptyTiles = False
-    if EmptyTiles is True:
+    if EmptyTiles is True:      #si le trajet est libre, déplacement normal
         ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
         ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
         Movedone = True
     return (ChessBoard, Movedone)
 
 
-def MoveKnight(piece, actualcoords, coords, ChessBoard, Movedone):
+def MoveKnight(actualcoords, coords, ChessBoard, Movedone):
+    #liste des mouvements possibles
     Move1 = [actualcoords[0]+1, actualcoords[1]+2]
     Move2 = [actualcoords[0]+1, actualcoords[1]-2]
     Move3 = [actualcoords[0]-1, actualcoords[1]+2]
@@ -258,15 +285,15 @@ def MoveKnight(piece, actualcoords, coords, ChessBoard, Movedone):
     Move6 = [actualcoords[0]+2, actualcoords[1]-1]
     Move7 = [actualcoords[0]-2, actualcoords[1]+1]
     Move8 = [actualcoords[0]-2, actualcoords[1]-1]
-    if coords in [Move1, Move2, Move3, Move4, Move5, Move6, Move7, Move8]:
+    if coords in [Move1, Move2, Move3, Move4, Move5, Move6, Move7, Move8]:  #vérifie que le mouvement est possible
         ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
         ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
         Movedone = True
     return (ChessBoard, Movedone)
 
 
-def MoveRook(piece, actualcoords, coords, ChessBoard, Movedone):
-    EmptyTiles = False
+def MoveRook(actualcoords, coords, ChessBoard, Movedone):
+    EmptyTiles = False      #vérifie que toutes les cases sur la ligne ou colonne de déplacement sont libres
     if coords[0] < actualcoords[0] and coords[1] == actualcoords[1]:
         EmptyTiles = True
         for index in range(coords[0]+1, actualcoords[0]):
@@ -287,34 +314,64 @@ def MoveRook(piece, actualcoords, coords, ChessBoard, Movedone):
         for index in range(actualcoords[1]+1, coords[1]):
             if ChessBoard[actualcoords[0]][index] != "   ":
                 EmptyTiles = False
-    if EmptyTiles is True:
+    if EmptyTiles is True:      #si le trajet est libre, déplacement normal
         ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
         ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
         Movedone = True
     return (ChessBoard, Movedone)
 
 
-def MovePawn(piece, actualcoords, coords, ChessBoard, Movedone, GhostPawn):
+def MovePawn(piece, actualcoords, coords, ChessBoard, Movedone, GhostPawn, NbJuicers):
     Pawnmove = 0
+    #détermination de la direction que vont avoir les pions
     if piece[2] == "w":
         Pawnmove = 1
     if piece[2] == "b":
         Pawnmove = -1
+    #vérification des mouvements possibles, sachant qu'ils diffèrent selon le joueur
     if coords[0] == actualcoords[0] + Pawnmove and coords[1] == actualcoords[1]:
         if ChessBoard[coords[0]][coords[1]] == "   ":
             ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
             ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
+            GhostPawn = [0, 0]
             Movedone = True
-    if coords[0] == actualcoords[0] + 2*Pawnmove and coords[1] == actualcoords[1]:
-        if ChessBoard[coords[0]][coords[1]] == "   ":
+    if coords[0] == actualcoords[0] + 2*Pawnmove and coords[1] == actualcoords[1] and actualcoords[0] in [2, 7]:
+        if ChessBoard[coords[0]][coords[1]] == "   " and ChessBoard[actualcoords[0] + Pawnmove][coords[1]] == "   ":
             ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
             ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
             GhostPawn = [actualcoords[0] + Pawnmove, actualcoords[1]]
             Movedone = True
-    return (ChessBoard, Movedone, GhostPawn)
+    if coords[0] == actualcoords[0] + Pawnmove and coords[1] in [actualcoords[1]-1, actualcoords[1]+1]:
+        if ChessBoard[coords[0]][coords[1]] != "   ":
+            ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
+            ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
+            GhostPawn = [0, 0]
+            Movedone = True
+        if coords == GhostPawn:     #prise en passant
+            ChessBoard[coords[0]][coords[1]] = ChessBoard[actualcoords[0]][actualcoords[1]]
+            ChessBoard[actualcoords[0]][actualcoords[1]] = "   "
+            ChessBoard[actualcoords[0]][coords[1]] = "   "
+            GhostPawn = [0, 0]
+            Movedone = True
+    if coords[0] in [1, 8]:         #promotion
+        print("Congratulations, you promoted !")
+        promotion = input("Choose which piece you want to use ? (Q, B, N or R) : ")
+        if promotion == "Q":
+            NbJuicers[0] += 1
+            ChessBoard[coords[0]][coords[1]] = promotion + str(NbJuicers[0]) + piece[2]
+        if promotion == "B":
+            NbJuicers[1] += 1
+            ChessBoard[coords[0]][coords[1]] = promotion + str(NbJuicers[1]) + piece[2]
+        if promotion == "N":
+            NbJuicers[2] += 1
+            ChessBoard[coords[0]][coords[1]] = promotion + str(NbJuicers[2]) + piece[2]
+        if promotion == "R":
+            NbJuicers[3] += 1
+            ChessBoard[coords[0]][coords[1]] = promotion + str(NbJuicers[3]) + piece[2]
+    return (ChessBoard, Movedone, GhostPawn, NbJuicers)
 
 
-def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):     #tour de jeu
+def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn, NbJuicers):     #tour de jeu
     if Bturn is False:
         print("\n It's White's turn !\n")
     if Bturn is True:
@@ -328,21 +385,19 @@ def PlayTurn(Bturn, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn):     #tour de jeu
     displaycoords = coords                               #utilisé dans les messages d'erreurs pour l'utilisateur
     coords = [int(coords[1]), LetterTrad(coords[0])]     #traduction des coordonnées en nombres
     if ChessBoard[coords[0]][coords[1]][2] != piece[2]:  #bloque les mouvements sur place et la prise d'une de ses pieces
-        move = MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn)
+        move = MovePiece(piece, actualcoords, coords, ChessBoard, RoqueOK1, RoqueOK2, GhostPawn, NbJuicers)
         RoqueOK1 = move[2]
         RoqueOK2 = move[3]
         GhostPawn = move[4]
+        NbJuicers = move[5]
         if move[1] is True:
             ChessBoard = move[0]
             Turndone = True
         else:
-            print("\n [!] Invalid Move. Will be explanied in the future...\n")
+            print("\n [!] Invalid Move...\n")
     else:
         print("\n [!] You already have a piece on " + displaycoords + "...\n")
-    return (ChessBoard, Turndone, RoqueOK1, RoqueOK2, GhostPawn)
-
-
-"More functions comming before this"
+    return (ChessBoard, Turndone, RoqueOK1, RoqueOK2, GhostPawn, NbJuicers)
 
 
 def StartGame():
@@ -352,20 +407,23 @@ def StartGame():
     RoqueOKw2 = True                    #on a besoin de deux variables par joueur
     RoqueOKb1 = True                    #une pour le grand roque, et l'autre pour le petit roque
     RoqueOKb2 = True
-    GhostPawn = [0, 0]
+    GhostPawn = [0, 0]                  #pion "fantôme" permettant la prise en passant
+    NbJuicers = [1, 2, 2, 2]            #variable servant à la promotion des pions
     ChessBoard = InitChessBoard()
-    CheckMate = False
+    CheckMate = False                   #pas implémenté pour le moment, donc ne s'arrête jamais. C'est à l'utilisateur d'arbitrer
     while CheckMate is False:
         if Bturn is False:
-            play = PlayTurn(Bturn, ChessBoard, RoqueOKw1, RoqueOKw2, GhostPawn)
+            play = PlayTurn(Bturn, ChessBoard, RoqueOKw1, RoqueOKw2, GhostPawn, NbJuicers)
             RoqueOKw1 = play[2]
             RoqueOKw2 = play[3]
             GhostPawn = play[4]
+            NbJuicers = play[5]
         if Bturn is True:
-            play = PlayTurn(Bturn, ChessBoard, RoqueOKb1, RoqueOKb2, GhostPawn)
+            play = PlayTurn(Bturn, ChessBoard, RoqueOKb1, RoqueOKb2, GhostPawn, NbJuicers)
             RoqueOKb1 = play[2]
             RoqueOKb2 = play[3]
             GhostPawn = play[4]
+            NbJuicers = play[5]
         if play[1] is True:
             ChessBoard = play[0]
             Bturn = not(Bturn)
